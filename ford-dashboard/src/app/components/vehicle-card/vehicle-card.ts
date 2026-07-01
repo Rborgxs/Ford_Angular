@@ -11,5 +11,6 @@ import { CommonModule } from '@angular/common';
 export class VehicleCardComponent {
 	@Input() title: string = '';
 	@Input() value: number = 0;
-	@Input() unit: string = 'unid';
+	@Input() unit: string = '';
+	@Input() iconType: 'sales' | 'connected' | 'update' = 'sales';
 }

@@ -16,6 +16,7 @@ export class LoginComponent {
 	private router = inject(Router);
 
 	errorMessage: string = '';
+	showPassword: boolean = false;
 
 	loginForm = new FormGroup({
 		nome: new FormControl('', [Validators.required]),

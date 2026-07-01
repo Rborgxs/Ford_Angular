@@ -1,44 +1,58 @@
-<div class="min-vh-100 bg-light">
-	<nav class="navbar navbar-dark bg-dark px-4">
-		<span class="navbar-brand fw-bold text-primary">🚗 Dashboard FORD</span>
-		<button class="btn btn-sm btn-outline-danger" (click)="logout()">Sair</button>
+<div class="min-vh-100 dashboard-wrapper">
+	<nav class="navbar navbar-dark px-4">
+		<button class="btn-back me-3" routerLink="/home" aria-label="Voltar para Home">
+			<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<path d="M19 12H5M12 19l-7-7 7-7"/>
+			</svg>
+		</button>
+		<img src="/img/ford-logo.png" alt="Logo Ford" width="28" height="28" class="me-2">
+		<span class="navbar-brand fw-bold mb-0">Dashboard</span>
+		<button class="btn btn-sm btn-outline-danger ms-auto" (click)="logout()">Sair</button>
 	</nav>
 
 	<div class="container-fluid py-4">
-		<div class="row g-3 mb-4 align-items-stretch">
-			<div class="col-md-3">
-				<div class="card p-3 h-100">
-					<small class="text-muted mb-2">Veículo</small>
-					<select class="form-select" [(ngModel)]="selectedVehicleName" (change)="onVehicleChange()">
-						@for (vehicle of vehicles; track vehicle.id) {
-							<option [value]="vehicle.vehicle">{{ vehicle.vehicle }}</option>
-						}
-					</select>
+
+		@if (loadingVehicles) {
+			<div class="loading-wrapper">
+				<div class="spinner"></div>
+				<p class="text-muted mt-3">Carregando veículos...</p>
+			</div>
+		} @else {
+			<div class="row g-3 mb-4">
+				<div class="col-lg-7">
+					<div class="card vehicle-image-card h-100">
+						<img [src]="selectedVehicle?.img || defaultVehicleImage" [alt]="selectedVehicle?.vehicle || 'Veículo'" class="img-fluid" style="max-height: 340px; object-fit: contain;">
+					</div>
+				</div>
+
+				<div class="col-lg-5">
+					<div class="card vehicle-select-card mb-3">
+						<small class="text-muted mb-2">Veículo</small>
+						<select class="form-select" [(ngModel)]="selectedVehicleName" (change)="onVehicleChange()">
+							@for (vehicle of vehicles; track vehicle.id) {
+								<option [value]="vehicle.vehicle">{{ vehicle.vehicle }}</option>
+							}
+						</select>
+					</div>
+
+					<div class="d-flex flex-column gap-3">
+						<app-vehicle-card [iconType]="'sales'" [title]="'Total de Vendas'" [value]="selectedVehicle?.volumetotal || 0" [unit]="'unid'"></app-vehicle-card>
+						<app-vehicle-card [iconType]="'connected'" [title]="'Conectados'" [value]="selectedVehicle?.connected || 0" [unit]="'unid'"></app-vehicle-card>
+						<app-vehicle-card [iconType]="'update'" [title]="'Update Software'" [value]="selectedVehicle?.softwareUpdates || 0" [unit]="'unid'"></app-vehicle-card>
+					</div>
 				</div>
 			</div>
+		}
 
-			<div class="col-md-3">
-				<app-vehicle-card [title]="'Total de Vendas'" [value]="selectedVehicle?.volumetotal || 0" [unit]="'unid'"></app-vehicle-card>
-			</div>
-			<div class="col-md-3">
-				<app-vehicle-card [title]="'Conectados'" [value]="selectedVehicle?.connected || 0" [unit]="'unid'"></app-vehicle-card>
-			</div>
-			<div class="col-md-3">
-				<app-vehicle-card [title]="'Update Software'" [value]="selectedVehicle?.softwareUpdates || 0" [unit]="'unid'"></app-vehicle-card>
-			</div>
-		</div>
-
-		<div class="row mb-4">
-			<div class="col-12 text-center">
-				@if (selectedVehicle) {
-					<img [src]="selectedVehicle.img" [alt]="selectedVehicle.vehicle" class="img-fluid" style="max-height: 250px; object-fit: contain;">
-				}
-			</div>
-		</div>
-
-		<div class="card p-3">
-			<div class="row mb-3">
-				<div class="col-md-6">
+		<div class="card search-card">
+			<div class="search-center mb-3">
+				<div class="search-input-wrapper">
+					<span class="search-icon">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<circle cx="11" cy="11" r="8"/>
+							<path d="m21 21-4.35-4.35"/>
+						</svg>
+					</span>
 					<input type="text" class="form-control" placeholder="Digite o código VIN (ex: 2FRHDUYS2Y63NHD22454)" [(ngModel)]="vinSearch" (input)="onVinInput()">
 				</div>
 			</div>
@@ -47,10 +61,14 @@
 				<div class="alert alert-warning">{{ vinError }}</div>
 			}
 
-			@if (vehicleData) {
+			@if (loadingVehicleData) {
+				<div class="loading-wrapper py-4">
+					<div class="spinner"></div>
+				</div>
+			} @else if (vehicleData) {
 				<div class="table-responsive">
 					<table class="table table-bordered table-striped">
-						<thead class="table-dark">
+						<thead>
 							<tr>
 								<th>Odômetro</th>
 								<th>Nível Combustível</th>

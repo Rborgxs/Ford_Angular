@@ -1,17 +1,18 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [CommonModule, RouterLink],
+	imports: [CommonModule, RouterLink, RouterLinkActive],
 	templateUrl: './home.html',
 	styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
 	private router = inject(Router);
 	userName: string = '';
+	menuOpen: boolean = true;
 
 	ngOnInit(): void {
 		const userData = sessionStorage.getItem('user');
