@@ -1,0 +1,27 @@
+<div class="container-fluid min-vh-100 d-flex align-items-center bg-dark">
+	<div class="row w-100 justify-content-center">
+		<div class="col-md-6 d-none d-md-flex align-items-center justify-content-center">
+			<img src="assets/img/ranger.png" alt="Ford Ranger" class="img-fluid" style="max-height:400px;">
+		</div>
+		<div class="col-md-4 col-10">
+			<div class="card p-4 shadow-lg">
+				<div class="text-center mb-4">
+					<h2 class="fw-bold text-primary">FORD</h2>
+					<h5 class="text-muted">Boas-vindas</h5>
+				</div>
+				<form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+					<div class="mb-3">
+						<input type="text" class="form-control" placeholder="Insira seu usuário" formControlName="nome">
+					</div>
+					<div class="mb-3">
+						<input type="password" class="form-control" placeholder="Insira sua senha" formControlName="senha">
+					</div>
+					@if (errorMessage) {
+						<div class="alert alert-danger py-2">{{ errorMessage }}</div>
+					}
+					<button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Entrar</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

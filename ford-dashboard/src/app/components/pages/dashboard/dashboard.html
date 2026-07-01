@@ -1,0 +1,82 @@
+<div class="min-vh-100 bg-light">
+	<nav class="navbar navbar-dark bg-dark px-4">
+		<span class="navbar-brand fw-bold text-primary">🚗 Dashboard FORD</span>
+		<button class="btn btn-sm btn-outline-danger" (click)="logout()">Sair</button>
+	</nav>
+
+	<div class="container-fluid py-4">
+		<div class="row g-3 mb-4 align-items-stretch">
+			<div class="col-md-3">
+				<div class="card p-3 h-100">
+					<small class="text-muted mb-2">Veículo</small>
+					<select class="form-select" [(ngModel)]="selectedVehicleName" (change)="onVehicleChange()">
+						@for (vehicle of vehicles; track vehicle.id) {
+							<option [value]="vehicle.vehicle">{{ vehicle.vehicle }}</option>
+						}
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-3">
+				<app-vehicle-card [title]="'Total de Vendas'" [value]="selectedVehicle?.volumetotal || 0" [unit]="'unid'"></app-vehicle-card>
+			</div>
+			<div class="col-md-3">
+				<app-vehicle-card [title]="'Conectados'" [value]="selectedVehicle?.connected || 0" [unit]="'unid'"></app-vehicle-card>
+			</div>
+			<div class="col-md-3">
+				<app-vehicle-card [title]="'Update Software'" [value]="selectedVehicle?.softwareUpdates || 0" [unit]="'unid'"></app-vehicle-card>
+			</div>
+		</div>
+
+		<div class="row mb-4">
+			<div class="col-12 text-center">
+				@if (selectedVehicle) {
+					<img [src]="selectedVehicle.img" [alt]="selectedVehicle.vehicle" class="img-fluid" style="max-height: 250px; object-fit: contain;">
+				}
+			</div>
+		</div>
+
+		<div class="card p-3">
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<input type="text" class="form-control" placeholder="Digite o código VIN (ex: 2FRHDUYS2Y63NHD22454)" [(ngModel)]="vinSearch" (input)="onVinInput()">
+				</div>
+			</div>
+
+			@if (vinError) {
+				<div class="alert alert-warning">{{ vinError }}</div>
+			}
+
+			@if (vehicleData) {
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead class="table-dark">
+							<tr>
+								<th>Odômetro</th>
+								<th>Nível Combustível</th>
+								<th>Status</th>
+								<th>Latitude</th>
+								<th>Longitude</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{ vehicleData.odometro }} km</td>
+								<td>{{ vehicleData.nivelCombustivel }}%</td>
+								<td>
+									@if (vehicleData.status === 'on') {
+										<span class="badge bg-success">ON</span>
+									} @else {
+										<span class="badge bg-danger">OFF</span>
+									}
+								</td>
+								<td>{{ vehicleData.lat }}</td>
+								<td>{{ vehicleData.long }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			}
+		</div>
+	</div>
+</div>
