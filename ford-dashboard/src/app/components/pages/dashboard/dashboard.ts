@@ -7,6 +7,7 @@ import { debounceTime, filter, distinctUntilChanged, switchMap } from 'rxjs/oper
 import { VehicleService } from '../../../services/vehicle';
 import { Veiculo, VeiculoData } from '../../../models/veiculo.model';
 import { VehicleCardComponent } from '../../vehicle-card/vehicle-card';
+import { API_IMG } from '../../../app.config';
 
 @Component({
 	selector: 'app-dashboard',
@@ -28,7 +29,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	loadingVehicles: boolean = true;
 	loadingVehicleData: boolean = false;
-	defaultVehicleImage: string = '/img/ranger.png';
+	defaultVehicleImage: string = API_IMG.ranger;
+	fordLogo = API_IMG.fordLogo;
 
 	private vinSubject = new Subject<string>();
 	private vinSubscription: any;
@@ -65,7 +67,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				if (vehicles.length > 0) {
 					this.selectedVehicle = vehicles[0];
 					this.selectedVehicleName = vehicles[0].vehicle;
-					this.loadDefaultVehicleData();
 				}
 				this.loadingVehicles = false;
 			},
@@ -80,37 +81,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		const found = this.vehicles.find(v => v.vehicle === this.selectedVehicleName);
 		if (found) {
 			this.selectedVehicle = found;
-			this.loadDefaultVehicleData();
 		}
-	}
-
-	// Carrega a tabela já com os dados do veículo selecionado, sem precisar buscar por VIN
-	loadDefaultVehicleData(): void {
-		const vin = (this.selectedVehicle as any)?.vin;
-		if (!vin) return;
-		this.loadingVehicleData = true;
-		this.vinError = '';
-		this.vehicleService.getVehicleData(vin).subscribe({
-			next: (data) => {
-				this.vehicleData = data;
-				this.loadingVehicleData = false;
-			},
-			error: () => {
-				this.vehicleData = null;
-				this.loadingVehicleData = false;
-			}
-		});
 	}
 
 	setupVinSearch(): void {
 		this.vinSubscription = this.vinSubject.pipe(
 			debounceTime(500),
-			filter(vin => vin.trim().length > 5),
+			filter(vin => vin.trim().length > 0),
 			distinctUntilChanged()
 		).subscribe(vin => this.searchVehicleData(vin));
 	}
 
 	onVinInput(): void {
+		this.vinError = '';
+		if (this.vinSearch.trim().length === 0) {
+			this.vehicleData = null;
+			this.loadingVehicleData = false;
+		}
 		this.vinSubject.next(this.vinSearch);
 	}
 

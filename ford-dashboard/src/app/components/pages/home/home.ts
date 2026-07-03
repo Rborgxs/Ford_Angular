@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { API_IMG } from '../../../app.config';
 
 @Component({
 	selector: 'app-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
 	private router = inject(Router);
 	userName: string = '';
 	menuOpen: boolean = true;
+	fordLogo = API_IMG.fordLogo;
 
 	ngOnInit(): void {
 		const userData = sessionStorage.getItem('user');

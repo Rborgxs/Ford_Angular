@@ -25,7 +25,6 @@ body {
 		transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-/* Glass utility */
 .glass {
 	background: var(--bg-card);
 	backdrop-filter: var(--glass-blur);
@@ -56,4 +55,8 @@ body {
 @keyframes floatSlow {
 	0%, 100% { transform: translateY(0); }
 	50% { transform: translateY(-10px); }
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
 }

@@ -2,24 +2,24 @@
 	<div class="login-card glass shadow-lg">
 		<div class="row g-0">
 			<div class="col-md-6 d-none d-md-flex login-image-side">
-				<img src="/ford-dashboard/public/ford.png" alt="Ford Ranger" class="w-100 h-100" style="object-fit: cover;">
+				<img [src]="rangerImg" alt="Ford Ranger" class="w-100 h-100" style="object-fit: cover;">
 				<div class="login-overlay"></div>
 			</div>
 			<div class="col-md-6 p-4 p-md-5 d-flex flex-column justify-content-center login-form-side">
 				<div class="text-center mb-4">
-					<img src="/ford-dashboard/public/img/ford.png" alt="Logo Ford" width="44" height="44" class="mb-2">
+					<img [src]="fordLogo" alt="Logo Ford" width="44" height="44" class="mb-2">
 					<h5 class="fw-normal" style="color: var(--text-muted);">Boas-vindas de volta</h5>
 				</div>
 				<form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
 					<div class="mb-3">
 						<label class="form-label">Usuário</label>
-						<input type="text" class="form-control" placeholder="Seu usuário" formControlName="nome">
+						<input type="text" class="form-control" placeholder="Seu usuário" formControlName="nome" [disabled]="isLoading">
 					</div>
 					<div class="mb-3">
 						<label class="form-label">Senha</label>
-						<div class="mb-3">
-							<input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Sua senha" formControlName="senha">
-							<button type="button" class="password-toggle-btn" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'">
+						<div class="password-wrapper">
+							<input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Sua senha" formControlName="senha" [disabled]="isLoading">
+							<button type="button" class="password-toggle-btn" (click)="showPassword = !showPassword" [attr.aria-label]="showPassword ? 'Ocultar senha' : 'Mostrar senha'" [disabled]="isLoading">
 								@if (showPassword) {
 									<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 										<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
@@ -31,14 +31,19 @@
 										<circle cx="12" cy="12" r="3"/>
 									</svg>
 								}
-								</button>
+							</button>
 						</div>
 					</div>
 					@if (errorMessage) {
 						<div class="alert alert-danger py-2 small">{{ errorMessage }}</div>
 					}
-					<button type="submit" class="btn btn-primary w-100 mt-2" [disabled]="loginForm.invalid">
-						Entrar
+					<button type="submit" class="btn btn-primary w-100 mt-2" [disabled]="loginForm.invalid || isLoading">
+						@if (isLoading) {
+							<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+							Entrando...
+						} @else {
+							Entrar
+						}
 					</button>
 				</form>
 			</div>

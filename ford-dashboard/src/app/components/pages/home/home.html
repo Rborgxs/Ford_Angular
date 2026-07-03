@@ -1,7 +1,7 @@
 <div class="home-wrapper min-vh-100 d-flex">
 	<aside class="side-menu glass" [class.closed]="!menuOpen">
 		<div class="side-menu-header">
-			<img src="/ford-dashboard/public/img/ford.png" alt="Logo Ford" width="30" height="30">
+			<img [src]="fordLogo" alt="Logo Ford" width="30" height="30">
 			<button class="menu-close-btn" (click)="menuOpen = false" aria-label="Fechar menu">
 				<span>&times;</span>
 			</button>
@@ -26,9 +26,9 @@
 	<main class="home-content flex-grow-1 d-flex align-items-center justify-content-center">
 		<div class="welcome-box glass text-center">
 			<div class="logo-ring">
-				<img src="/ford-dashboard/public/img/ford.png" alt="Logo Ford" class="welcome-logo">
+				<img [src]="fordLogo" alt="Logo Ford" class="welcome-logo">
 			</div>
-			<h2 class="welcome-title">Olá, {{ userName }} 👋</h2>
+			<h2 class="welcome-title">Olá, {{ userName }}</h2>
 			<p class="welcome-subtitle">Que bom ter você por aqui.</p>
 		</div>
 	</main>

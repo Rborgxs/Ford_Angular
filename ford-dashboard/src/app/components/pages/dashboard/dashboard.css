@@ -200,3 +200,39 @@
 	width: 100%;
 	max-width: 480px;
 }
+
+.vin-table-wrapper {
+	border-radius: 0.75rem;
+	overflow: hidden;
+	margin-top: 1rem;
+	border: 1px solid var(--glass-border);
+}
+
+.vin-table-wrapper .table {
+	margin-bottom: 0;
+}
+
+.vin-table-wrapper .table thead th:first-child {
+	border-top-left-radius: 0.75rem;
+}
+
+.vin-table-wrapper .table thead th:last-child {
+	border-top-right-radius: 0.75rem;
+}
+
+.vin-table-wrapper .table tbody tr {
+	transition: background-color 0.15s ease;
+}
+
+.vin-table-wrapper .table-striped > tbody > tr:hover > * {
+	background-color: rgba(47,111,237,0.06) !important;
+}
+
+.vin-table tbody tr:hover {
+	background-color: rgba(0, 0, 0, 0.03);
+}
+
+.vin-table .badge {
+	font-size: 0.75rem;
+	padding: 0.4em 0.7em;
+}

@@ -6,7 +6,6 @@
 	overflow: hidden;
 }
 
-/* Menu lateral */
 .side-menu {
 	width: 260px;
 	display: flex;
@@ -95,7 +94,6 @@
 	border-color: var(--accent-blue);
 }
 
-/* Card central */
 .welcome-box {
 	padding: 3.5rem 3rem;
 	border-radius: 1.5rem;
