@@ -1,7 +1,7 @@
 <div class="home-wrapper min-vh-100 d-flex">
 	<aside class="side-menu glass" [class.closed]="!menuOpen">
 		<div class="side-menu-header">
-			<img [src]="fordLogo" alt="Logo Ford" width="30" height="30">
+			<img [src]="fordLogo" alt="Logo Ford" class="menu-logo">
 			<button class="menu-close-btn" (click)="menuOpen = false" aria-label="Fechar menu">
 				<span>&times;</span>
 			</button>
@@ -19,17 +19,31 @@
 
 	@if (!menuOpen) {
 		<button class="menu-toggle-btn glass" (click)="menuOpen = true" aria-label="Abrir menu">
-			<span class="navbar-toggler-icon"></span>
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+				<line x1="3" y1="6" x2="21" y2="6"/>
+				<line x1="3" y1="12" x2="21" y2="12"/>
+				<line x1="3" y1="18" x2="21" y2="18"/>
+			</svg>
 		</button>
 	}
 
-	<main class="home-content flex-grow-1 d-flex align-items-center justify-content-center">
+	<main class="home-content flex-grow-1 d-flex align-items-center justify-content-center position-relative">
+		<div class="bg-orb orb-1"></div>
+		<div class="bg-orb orb-2"></div>
+		<div class="bg-grid"></div>
+
 		<div class="welcome-box glass text-center">
 			<div class="logo-ring">
 				<img [src]="fordLogo" alt="Logo Ford" class="welcome-logo">
 			</div>
 			<h2 class="welcome-title">Olá, {{ userName }}</h2>
 			<p class="welcome-subtitle">Que bom ter você por aqui.</p>
+			<a routerLink="/dashboard" class="btn-go-dashboard mt-4">
+				Ir para o Dashboard
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M5 12h14M12 5l7 7-7 7"/>
+				</svg>
+			</a>
 		</div>
 	</main>
 </div>

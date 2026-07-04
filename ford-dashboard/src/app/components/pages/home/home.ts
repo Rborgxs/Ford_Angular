@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 	userName: string = '';
 	menuOpen: boolean = true;
 	fordLogo = API_IMG.fordLogo;
+	rangerImg = API_IMG.ranger;
 
 	ngOnInit(): void {
 		const userData = sessionStorage.getItem('user');

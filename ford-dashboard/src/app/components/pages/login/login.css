@@ -1,52 +1,111 @@
 .login-page {
-	background:
-		radial-gradient(circle at 75% 15%, rgba(47,111,237,0.2), transparent 45%),
-		radial-gradient(circle at 10% 90%, rgba(20,54,160,0.25), transparent 45%),
-		var(--bg-dark);
 	min-height: 100vh;
+	background:
+		radial-gradient(circle at 90% 5%, rgba(47,111,237,0.12), transparent 40%),
+		radial-gradient(circle at 5% 95%, rgba(20,54,160,0.15), transparent 40%),
+		var(--bg-dark);
 }
 
 .login-card {
 	width: 100%;
-	max-width: 900px;
-	border-radius: 1.25rem;
+	max-width: 920px;
+	border-radius: 1.5rem;
 	overflow: hidden;
-	animation: fadeInUp 0.5s ease;
+	background: var(--bg-card);
+	backdrop-filter: var(--glass-blur);
+	-webkit-backdrop-filter: var(--glass-blur);
+	border: 1px solid var(--glass-border);
+	animation: fadeInUp 0.4s ease;
 }
 
+/* --- Lado da imagem --- */
 .login-image-side {
 	position: relative;
+	min-height: 560px;
+	overflow: hidden;
+}
+
+.login-hero-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	display: block;
 }
 
 .login-overlay {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(to top, rgba(5,7,13,0.75), transparent 55%);
+	background: linear-gradient(180deg, rgba(8,12,24,0.15) 0%, rgba(8,12,24,0.85) 100%);
 }
 
-.login-form-side .form-label {
+.login-image-caption {
+	position: absolute;
+	left: 1.75rem;
+	bottom: 1.75rem;
+	right: 1.75rem;
+	z-index: 1;
+}
+
+.badge-line {
+	display: block;
+	width: 42px;
+	height: 3px;
+	background: var(--accent-blue);
+	border-radius: 2px;
+	margin-bottom: 0.75rem;
+}
+
+.login-image-caption p {
+	color: #fff;
+	font-size: 1.05rem;
+	font-weight: 500;
+	line-height: 1.4;
+	margin: 0;
+	max-width: 320px;
+}
+
+/* --- Lado do formulário --- */
+.login-form-side {
+	background: transparent;
+}
+
+.login-title {
+	color: var(--text-primary);
+	font-weight: 700;
+	margin-bottom: 0.25rem;
+}
+
+.login-subtitle {
+	color: var(--text-muted);
+	font-size: 0.9rem;
+	margin-bottom: 0;
+}
+
+.form-label {
 	color: var(--text-muted);
 	font-size: 0.85rem;
+	font-weight: 500;
+	margin-bottom: 0.4rem;
 }
 
-.login-form-side .form-control {
+.form-control {
 	background: rgba(255,255,255,0.03);
 	border: 1px solid var(--glass-border);
 	color: var(--text-primary);
-	border-radius: 0.7rem;
+	border-radius: 0.6rem;
 	padding: 0.7rem 1rem;
-	padding-right: 2.5rem;
 }
 
-.login-form-side .form-control:focus {
-	background: rgba(255,255,255,0.05);
+.form-control::placeholder {
+	color: #4d5872;
+}
+
+.form-control:focus {
 	border-color: var(--accent-blue);
 	box-shadow: 0 0 0 3px var(--accent-blue-glow);
+	background: rgba(255,255,255,0.03);
 	color: var(--text-primary);
-}
-
-.login-form-side .form-control::placeholder {
-	color: #4d5872;
 }
 
 .password-wrapper {
@@ -55,14 +114,13 @@
 
 .password-toggle-btn {
 	position: absolute;
-	right: 0.6rem;
+	right: 0.9rem;
 	top: 50%;
 	transform: translateY(-50%);
 	background: transparent;
 	border: none;
-	cursor: pointer;
 	color: var(--text-muted);
-	padding: 0.2rem 0.4rem;
+	cursor: pointer;
 	display: flex;
 	align-items: center;
 }
@@ -71,27 +129,50 @@
 	color: var(--text-primary);
 }
 
-.btn-primary {
-	background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-deep));
+.btn-submit {
+	background: var(--accent-blue);
+	color: #fff;
 	border: none;
-	border-radius: 0.7rem;
+	border-radius: 0.6rem;
+	padding: 0.8rem;
 	font-weight: 600;
-	padding: 0.75rem;
+	font-size: 0.95rem;
+	cursor: pointer;
+	transition: filter 0.15s ease, transform 0.15s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.btn-primary:hover:not(:disabled) {
-	box-shadow: 0 8px 24px var(--accent-blue-glow);
-	transform: translateY(-2px);
+.btn-submit:hover:not(:disabled) {
+	filter: brightness(1.1);
+	transform: translateY(-1px);
 }
 
-.btn-primary:disabled {
-	background: #232c40;
+.btn-submit:disabled {
 	opacity: 0.6;
+	cursor: not-allowed;
 }
 
 .alert-danger {
 	background: rgba(220, 53, 69, 0.1);
-	border: 1px solid rgba(220, 53, 69, 0.3);
-	color: #ff8b96;
+	border: 1px solid rgba(220,53,69,0.3);
+	color: #ff6b7a;
 	border-radius: 0.6rem;
+}
+
+.logo-ford--lg {
+	height: 56px;
+	width: auto !important;
+	max-width: none !important;
+	object-fit: contain;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 767px) {
+	.login-card {
+		border-radius: 1rem;
+	}
 }

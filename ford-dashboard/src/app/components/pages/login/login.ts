@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -16,9 +16,10 @@ export class LoginComponent {
 	private loginService = inject(LoginService);
 	private router = inject(Router);
 
-	errorMessage: string = '';
-	showPassword: boolean = false;
-	isLoading: boolean = false;
+	errorMessage = signal<string>('');
+	showPassword = signal<boolean>(false);
+	isLoading = signal<boolean>(false);
+
 	rangerImg = API_IMG.ranger;
 	fordLogo = API_IMG.fordLogo;
 
@@ -27,26 +28,30 @@ export class LoginComponent {
 		senha: new FormControl('', [Validators.required])
 	});
 
+	togglePassword(): void {
+		this.showPassword.update(v => !v);
+	}
+
 	onSubmitLogin(): void {
 		if (this.loginForm.invalid) {
-			this.errorMessage = 'Preencha todos os campos.';
+			this.errorMessage.set('Preencha todos os campos.');
 			return;
 		}
 		const nome = this.loginForm.value.nome!;
 		const senha = this.loginForm.value.senha!;
 
-		this.errorMessage = '';
-		this.isLoading = true;
+		this.errorMessage.set('');
+		this.isLoading.set(true);
 
 		this.loginService.login(nome, senha).subscribe({
 			next: (user) => {
 				sessionStorage.setItem('user', JSON.stringify(user));
-				this.isLoading = false;
+				this.isLoading.set(false);
 				this.router.navigate(['/home']);
 			},
 			error: (err) => {
-				this.errorMessage = err.error?.message || 'Erro ao realizar login.';
-				this.isLoading = false;
+				this.errorMessage.set(err.error?.message || 'Erro ao realizar login.');
+				this.isLoading.set(false);
 			}
 		});
 	}

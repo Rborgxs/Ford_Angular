@@ -1,11 +1,9 @@
 .home-wrapper {
-	background:
-		radial-gradient(circle at 15% 15%, rgba(47,111,237,0.18), transparent 40%),
-		radial-gradient(circle at 85% 85%, rgba(20,54,160,0.25), transparent 45%),
-		var(--bg-dark);
+	background: var(--bg-dark);
 	overflow: hidden;
 }
 
+/* ===== Menu lateral ===== */
 .side-menu {
 	width: 260px;
 	display: flex;
@@ -13,6 +11,7 @@
 	padding: 1.25rem 1rem;
 	border-radius: 0 1rem 1rem 0;
 	animation: slideInLeft 0.4s ease;
+	z-index: 5;
 }
 
 .side-menu.closed {
@@ -26,6 +25,13 @@
 	margin-bottom: 2rem;
 	padding-bottom: 1rem;
 	border-bottom: 1px solid var(--glass-border);
+}
+
+.menu-logo {
+	width: 42px !important;
+	height: 42px !important;
+	object-fit: contain;
+	flex-shrink: 0;
 }
 
 .menu-close-btn {
@@ -56,7 +62,7 @@
 }
 
 .menu-link:hover {
-	background: rgba(47,111,237,0.12);
+	background: rgba(47, 111, 237, 0.12);
 	color: var(--text-primary);
 	transform: translateX(4px);
 }
@@ -86,37 +92,111 @@
 	left: 1.25rem;
 	z-index: 10;
 	border-radius: 0.6rem;
-	padding: 0.5rem 0.75rem;
+	padding: 0.6rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
+	color: var(--text-primary);
 }
 
 .menu-toggle-btn:hover {
 	border-color: var(--accent-blue);
 }
 
+/* ===== Fundo moderno do conteúdo principal ===== */
+.home-content {
+	position: relative;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 15% 20%, rgba(47, 111, 237, 0.16), transparent 42%),
+		radial-gradient(circle at 85% 80%, rgba(20, 54, 160, 0.22), transparent 45%),
+		linear-gradient(160deg, #05070d 0%, #0a0f1c 45%, #070b14 100%);
+}
+
+.bg-grid {
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(47, 111, 237, 0.06) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(47, 111, 237, 0.06) 1px, transparent 1px);
+	background-size: 42px 42px;
+	mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 75%);
+	-webkit-mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 75%);
+	pointer-events: none;
+}
+
+.bg-orb {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(60px);
+	opacity: 0.55;
+	pointer-events: none;
+	animation: floatSlow 8s ease-in-out infinite;
+}
+
+.orb-1 {
+	width: 380px;
+	height: 380px;
+	background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+	top: -80px;
+	left: -100px;
+}
+
+.orb-2 {
+	width: 320px;
+	height: 320px;
+	background: radial-gradient(circle, var(--accent-blue-deep) 0%, transparent 70%);
+	bottom: -100px;
+	right: -80px;
+	animation-delay: 2s;
+}
+
+/* ===== Card de boas-vindas ===== */
 .welcome-box {
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
 	padding: 3.5rem 3rem;
 	border-radius: 1.5rem;
 	animation: fadeInUp 0.6s ease;
 	max-width: 480px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.welcome-box::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-image: url('http://localhost:3001/img/ranger.png');
+	background-size: cover;
+	background-position: center;
+	opacity: 0.12;
+	z-index: 0;
+}
+
+.welcome-box > * {
+	position: relative;
+	z-index: 1;
 }
 
 .logo-ring {
-	width: 96px;
-	height: 96px;
+	width: 110px;
+	height: 110px;
 	margin: 0 auto 1.75rem;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: radial-gradient(circle, rgba(47,111,237,0.25), transparent 70%);
+	background: radial-gradient(circle, rgba(47, 111, 237, 0.25), transparent 70%);
 	border: 1px solid var(--glass-border);
 	animation: floatSlow 4s ease-in-out infinite, pulseGlow 3s ease-in-out infinite;
 }
 
 .welcome-logo {
-	width: 48px;
-	height: 48px;
+	width: 64px !important;
+	height: 64px !important;
+	object-fit: contain;
 }
 
 .welcome-title {
@@ -129,4 +209,23 @@
 	color: var(--text-muted);
 	font-size: 1.05rem;
 	margin: 0;
+}
+
+.btn-go-dashboard {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-deep));
+	color: #fff;
+	text-decoration: none;
+	padding: 0.7rem 1.5rem;
+	border-radius: 0.7rem;
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+.btn-go-dashboard:hover {
+	color: #fff;
+	box-shadow: 0 8px 24px var(--accent-blue-glow);
+	transform: translateY(-2px);
 }
